@@ -1,0 +1,246 @@
+Guion video trabajo final SO
+==================================
+
+Duración recomendada: 5 a 7 minutos
+
+========================================================
+ESCENA 1 — COMPILACIÓN DEL PROYECTO
+========================================================
+
+Qué decir:
+“Voy a compilar el proyecto miniOS desde cero para verificar que no existan errores.”
+
+Comandos:
+
+cd ~/minios-lab
+make clean && make
+
+Mostrar:
+- Que compile sin errores
+- Que aparezca el ejecutable minios
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 2 — ARRANQUE DE LOS 3 COMPONENTES
+========================================================
+
+Qué decir:
+“Ahora voy a iniciar los tres componentes principales:
+el scheduler miniOS, el bridge WebSocket y el dashboard.”
+
+TERMINAL 1:
+
+cd ~/minios-lab/bridge
+node index.js
+
+Mostrar:
+- WebSocket escuchando en ws://localhost:9090
+- Socket Unix escuchando
+
+TERMINAL 2:
+
+cd ~/minios-lab/dashboard
+npm run dev
+
+Mostrar:
+- localhost funcionando
+
+Abrir navegador:
+http://localhost:5173
+
+TERMINAL 3:
+
+cd ~/minios-lab
+./minios
+
+Comando:
+
+log on
+
+Qué decir:
+“Con log on se activan los eventos JSON enviados al dashboard.”
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 3 — CREACIÓN DE 5 PROCESOS
+========================================================
+
+Qué decir:
+“Voy a lanzar cinco procesos concurrentes para que el scheduler Round Robin empiece a alternarlos.”
+
+Comandos:
+
+run busy_loop
+run fibonacci
+run primos
+run countdown
+run busy_loop
+
+Mostrar:
+- PID de cada proceso
+- Mensajes de ejecución
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 4 — GANTT CHART
+========================================================
+
+Ir al dashboard.
+
+Qué decir:
+“Aquí se observa el Gantt chart mostrando los procesos con diferentes colores y cómo el scheduler realiza los cambios de contexto.”
+
+Mostrar:
+- barras moviéndose
+- colores distintos
+- alternancia entre procesos
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 5 — COMANDO PS
+========================================================
+
+Comando:
+
+ps
+
+Qué decir:
+
+“Este comando muestra la tabla de procesos.”
+
+Explicar columnas:
+
+- PID:
+  identificador único del proceso
+
+- NOMBRE:
+  programa ejecutado
+
+- ESTADO:
+  puede ser RUNNING, READY o TERMINATED
+
+- CPU(ms):
+  tiempo acumulado de CPU
+
+- ESPERA(ms):
+  tiempo que el proceso pasó esperando
+
+- SWITCHES:
+  cantidad de cambios de contexto realizados
+
+Mostrar también:
+- Ready Queue
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 6 — CAMBIO DE TIME SLICE
+========================================================
+
+Qué decir:
+“Ahora voy a modificar el quantum del scheduler para observar el efecto en el Gantt.”
+
+Comando:
+
+slice 200
+
+Qué decir:
+“Con 200 ms los cambios de contexto ocurren más rápido.”
+
+Mostrar dashboard:
+- cambios rápidos
+
+Luego:
+
+slice 1500
+
+Qué decir:
+“Con 1500 ms los procesos permanecen más tiempo ejecutándose.”
+
+Mostrar dashboard:
+- cambios más lentos
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 7 — KILL DE UN PROCESO
+========================================================
+
+Comandos:
+
+run fibonacci
+run fibonacci
+run fibonacci
+
+Luego:
+
+ps
+
+Escoger un PID que esté RUNNING o READY.
+
+Ejemplo:
+
+kill 12345
+
+Luego:
+
+ps
+
+Qué decir:
+“Aquí termino manualmente un proceso y verifico el cambio tanto en miniOS como en el dashboard.”
+
+Mostrar:
+- proceso terminado
+- cambio en dashboard
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 8 — STATS
+========================================================
+
+Comando:
+
+stats
+
+Qué decir:
+“Este comando muestra estadísticas globales del scheduler.”
+
+Explicar:
+- procesos activos
+- procesos terminados
+- CPU total acumulado
+- context switches
+- promedios
+
+--------------------------------------------------------
+
+========================================================
+ESCENA 9 — FINALIZACIÓN Y VERIFICACIÓN
+========================================================
+
+Comando:
+
+exit
+
+Qué decir:
+“Voy a cerrar miniOS y verificar que no queden procesos zombie.”
+
+Nueva terminal:
+
+ps aux | grep defunct
+
+Qué decir:
+“No existen procesos defunct, por lo tanto el scheduler liberó correctamente los recursos.”
+
+--------------------------------------------------------
+
+CIERRE
+========================================================
+
+Qué decir:
+“Con esto finaliza la demostración del funcionamiento del scheduler Round Robin de miniOS.”
