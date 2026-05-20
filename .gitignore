@@ -18,3 +18,9 @@ node_modules/
 # Socket files
 /tmp/minios.sock
 /tmp/minios_*.sock
+
+node_modules/
+dist/
+*.o
+minios
+programs/bin/

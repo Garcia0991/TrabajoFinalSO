@@ -4,7 +4,7 @@ const readline = require('readline');
 const { WebSocketServer } = require('ws');
 
 const SOCK_PATH = process.env.SOCK_PATH || '/tmp/minios.sock';
-const WS_PORT = parseInt(process.env.WS_PORT || '8080');
+const WS_PORT = parseInt(process.env.WS_PORT || '9090');
 
 // Clean up stale socket file from a previous run
 try { fs.unlinkSync(SOCK_PATH); } catch { /* not exist: ok */ }
